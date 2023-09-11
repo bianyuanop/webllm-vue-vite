@@ -16,22 +16,23 @@ async function initBot() {
   await chatBot.reload(model_name);
 }
 
-function pushMessage(from: string, message: string, step: number) {
+function pushMessage(from: string, message: string ) {
   if(history.value == null) return;
 
   let node = document.createElement('div');
   node.setAttribute('class', 'prompt');
-  node.innerText = `${from}-${step}: ${message}`;
+  node.innerText = `${from}: ${message}`;
 
   history.value.appendChild(node);
 }
 
-function generateProgressCallBack(_step: number, message: string) {
-  pushMessage('ChatBot', message, _step);
+function generateProgressCallBack(_step: number, _: string) {
+  // pushMessage('ChatBot', message, _step);
 }
 
-function interacBot(msg: string) {
-  chatBot.generate(msg, generateProgressCallBack);
+async function interacBot(msg: string) {
+  const reply = await chatBot.generate(msg, generateProgressCallBack);
+  pushMessage('ChatBot', reply);
 }
 
 onMounted(async () => {
@@ -53,7 +54,7 @@ onMounted(async () => {
         id="new"
         cols="30"
         rows="10"
-        :value="newMsg"
+        v-model="newMsg"
       ></textarea>
       <button @click="interacBot(newMsg)">Send</button>
     </div>
