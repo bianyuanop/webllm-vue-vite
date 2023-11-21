@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.8",
-    "vue": "^3.3.4"
+    "vue": "^3.3.7"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
